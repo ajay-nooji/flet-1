@@ -1,1 +1,1 @@
-A few python projects with flet GUI.
+Simple python apps with interactive UI.
