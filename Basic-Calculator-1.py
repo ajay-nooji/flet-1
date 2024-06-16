@@ -2,33 +2,45 @@ import flet as ft
 
 def main(page:ft.Page):
 
+    # Align the calcaulator to center of window
+
     page.vertical_alignment=ft.MainAxisAlignment.CENTER
     page.horizontal_alignment=ft.CrossAxisAlignment.CENTER
     
-    def toggle(e):
-        txt.value="-"+"("+txt.value+")"
+    # Changes the sign of the equation
+    
+    def sign_change(e):
+        eqn.value="-"+"("+eqn.value+")"
         page.update()
+        
+    # Displays the equation
 
     def display(e):
-        txt.value+=e.control.text
+        eqn.value+=e.control.text
         page.update()
 
+    # Calculates the final result of the equation
+    
     def calc_op(e):
-        result.value=eval(txt.value)
+        result.value=eval(eqn.value)
         page.update()
-        
+    
+    # Clears the equation and Result Text Fields
+    
     def clear_op(e):
-        result.value=txt.value=""
+        result.value=eqn.value=""
         page.update()
+    
+    # Deletes the last character from the equation
         
     def delete_op(e):
-        s=txt.value
+        s=eqn.value
         s=s[:-1]
-        txt.value=s
+        eqn.value=s
         page.update()
         
     result=ft.TextField(label="Result")
-    txt=ft.TextField()
+    eqn=ft.TextField()
     
     zero_btn=ft.FilledTonalButton(text="0",on_click=display,width=100)
     one_btn=ft.FilledTonalButton(text="1",on_click=display,width=100)
@@ -41,7 +53,7 @@ def main(page:ft.Page):
     eight_btn=ft.FilledTonalButton(text="8",on_click=display,width=100)
     nine_btn=ft.FilledTonalButton(text="9",on_click=display,width=100)
     
-    toggle_btn=ft.OutlinedButton(text="+/-",on_click=toggle,width=100)
+    sign_change_btn=ft.OutlinedButton(text="+/-",on_click=sign_change,width=100)
     dec_btn=ft.OutlinedButton(text=".",on_click=display,width=100)
     sum_btn=ft.OutlinedButton(text="+",on_click=display,width=100)
     diff_btn=ft.OutlinedButton(text="-",on_click=display,width=100)
@@ -53,14 +65,11 @@ def main(page:ft.Page):
     clear_btn=ft.FilledButton(text="AC",on_click=clear_op,width=100)
     delete_icon=ft.FilledButton(text="C",on_click=delete_op,width=100)
     
-    #page.add(
-    
-    #page.add(ft.Container(content=ft.Column([ft.Row(controls=[clear_btn,delete_icon]),ft.Row(controls=[clear_btn,diff_btn])]),bgcolor=ft.colors.GREEN_200,width=500,height=500,border_radius=50))
     page.add(
         ft.Container(
             content=ft.Column([
-                result,txt,
-                ft.Row(controls=[clear_btn,delete_icon,div_btn,toggle_btn]),
+                result,eqn,
+                ft.Row(controls=[clear_btn,delete_icon,div_btn,sign_change_btn]),
                 ft.Row(controls=[seven_btn,eight_btn,nine_btn,prod_btn]),
                 ft.Row(controls=[four_btn,five_btn,six_btn,diff_btn]),
                 ft.Row(controls=[one_btn,two_btn,three_btn,sum_btn]),
